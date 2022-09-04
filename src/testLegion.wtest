@@ -2,6 +2,7 @@ import chicos.*
 import elementos.*
 import adultos.*
 import legion.*
+import barrio.*
 
 test "La capacidad de susto es la suma de las de sus integrantes" {
 	legionDelTerror.agregarIntegrantes([macaria,pancracio])
@@ -51,7 +52,7 @@ test "Los 2 con mas caramelos" {
 	pancracio.recibirCaramelos(10)
 	macaria.recibirCaramelos(10)
 	pedro.recibirCaramelos(10)
-	barrio.chicos( [pedro,macaria,pancracio])
+	barrio.chicos([pedro,macaria,pancracio])
 	assert.equals([pancracio,macaria],barrio.chicosConMasCaramelos(2))
 }
 
@@ -73,10 +74,13 @@ test "Norma sin repetidos" {
 
 test "Norma sin repetidos no hace nada si un chico tiene muchas veces el mismo elemento" {
 	pancracio.disfrazar(barba)
-	pancracio.disfrazar(barba)
+	pedro.disfrazar(mascaraDracula)
 	pedro.disfrazar(mascaraDracula)
 	pedro.disfrazar(mascaraFrankenstein)
 	legionDelTerror.agregarIntegrantes([pedro,macaria,pancracio])
+	assert.that(legionDelTerror.disfracesRepetidos().contains(mascaraDracula))
+	assert.notThat(legionDelTerror.disfracesRepetidos().contains(mascaraFrankenstein))
 	legionDelTerror.normaSinRepetidos()
-	assert.that(legionDelTerror.todosLosDisfraces().contains(barba))
+
+	assert.that(legionDelTerror.todosLosDisfraces().contains(mascaraDracula))
 }
