@@ -34,14 +34,17 @@ object legionDelTerror {
 		return disfraces.flatten().asSet() //Borra los duplicados
 	}
 	
-	method disfracesRepetidos(){
+	method todosLosDisfracesConRepetidos(){
 		var disfraces=[]
 		integrantes
 			.flatten()
-			.forEach{integrante=>disfraces.add(integrante.disfraces())} //lista con todos los disfraces
-		
-		return disfraces.filter{disfraz=>disfraces.occurrencesOf(disfraz)>1}.asSet()  //por que se guarda tantas veces como este repetido
-		
+			.forEach{integrante=>disfraces.add(integrante.disfraces())}
+		return disfraces.flatten()
+	}
+	method disfracesRepetidos(){
+		return 	self.todosLosDisfracesConRepetidos()
+			.filter{disfraz=>self.todosLosDisfracesConRepetidos().occurrencesOf(disfraz)>1}
+			.asSet() //Lista solo con los repetidos solo una vez cada uno
 	}
 	
 	method normaSinRepetidos(){
